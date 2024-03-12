@@ -1,0 +1,12 @@
+{{ define "index" }}<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{{ block "title" . }}{{ .Name }} - Comic Hosting Catalog API{{ end }}</title>
+    </head>
+    <body>
+        <div id="main">{{ block "main" . }}
+            <h1>Hello World!</h1>
+        {{ end }}</div>
+    </body>
+</html>{{ end }}

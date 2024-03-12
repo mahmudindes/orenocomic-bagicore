@@ -1,0 +1,22 @@
+general:
+  http:
+    cors_origins:
+      - http://example.com
+datastore:
+  database:
+    url: postgresql://user:pass@localhost/dbname
+    provider: postgres
+  redis:
+    enable: false
+    url: redis://redis:123@localhost
+auth:
+  oauth:
+    issuer: https://accounts.example.com/
+    audience: bagicore
+    permission_prefix: bagicomic
+server:
+  http:
+    address: 127.0.0.1:80
+    read_timeout: 5s
+    shutdown_timeout: 15s
+    write_timeout: 10s

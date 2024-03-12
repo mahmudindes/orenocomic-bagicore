@@ -1,0 +1,1914 @@
+openapi: 3.0.3
+info:
+  title: BagiCore
+  description: Go-based comic hosting catalog backend.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.0.1
+tags:
+  - name: Comic
+  - name: Language
+  - name: Website
+  - name: Link
+servers:
+  - url: /api/v0
+paths:
+  /comics:
+    get:
+      tags:
+        - Comic
+      summary: List comic.
+      operationId: listComic
+      parameters:
+        - name: page
+          in: query
+          description: Page number of results.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of results.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: Sort results returned.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Comic list.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: The total count of comic with current filter.
+            X-Pagination-Limit:
+              schema:
+                type: integer
+              description: The last page number of comic with current filter and limit.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comic'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - Comic
+      summary: Add comic.
+      operationId: addComic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComic'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewComic'
+        required: true
+      responses:
+        '201':
+          description: Comic added.
+          headers:
+            Location:
+              description: The path of new comic.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comic'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}:
+    get:
+      tags:
+        - Comic
+      summary: Get comic.
+      operationId: getComic
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comic gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comic'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Comic
+      summary: Update comic.
+      operationId: updateComic
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetComic'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetComic'
+        required: true
+      responses:
+        '200':
+          description: Comic updated.
+          headers:
+            Location:
+              description: The path of updated comic.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comic'
+        '204':
+          description: Comic unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Comic
+      summary: Delete comic.
+      operationId: deleteComic
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Comic deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}/links:
+    post:
+      tags:
+        - Comic
+      summary: Add comic link.
+      operationId: addComicLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComicLink'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewComicLink'
+        required: true
+      responses:
+        '201':
+          description: Comic link added.
+          headers:
+            Location:
+              description: The path of new comic link.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicLink'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}/links/{websiteDomain}-{relativeURL}:
+    get:
+      tags:
+        - Comic
+      summary: Get comic link.
+      operationId: getComicLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link to return.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comic link gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicLink'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Comic
+      summary: Update comic link.
+      operationId: updateComicLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link to update.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetComicLink'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetComicLink'
+        required: true
+      responses:
+        '200':
+          description: Comic link updated.
+          headers:
+            Location:
+              description: The path of updated comic link.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicLink'
+        '204':
+          description: Comic link unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Comic
+      summary: Delete comic link.
+      operationId: deleteComicLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: websiteDomain
+          in: path
+          description: Website domain name of comic link to delete.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Comic link deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}/chapters:
+    get:
+      tags:
+        - Comic
+      summary: List comic chapter.
+      operationId: listComicChapter
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number of results.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of results.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: Sort results returned.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Comic chapter list.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: The total count of comic chapter with current filter.
+            X-Pagination-Limit:
+              schema:
+                type: integer
+              description: The last page number of comic chapter with current filter and limit.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ComicChapter'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - Comic
+      summary: Add comic chapter.
+      operationId: addComicChapter
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: You can't set comic id or comic code because it will be overridden by code path parameter.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComicChapter'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewComicChapter'
+        required: true
+      responses:
+        '201':
+          description: Comic chapter added.
+          headers:
+            Location:
+              description: The path of new comic chapter.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicChapter'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}/chapters/{cv}:
+    get:
+      tags:
+        - Comic
+      summary: Get comic chapter.
+      operationId: getComicChapter
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic to return.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comic chapter gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicChapter'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Comic
+      summary: Update comic chapter.
+      operationId: updateComicChapter
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: You can't change comic id or comic code in this endpoint.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetComicChapter'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetComicChapter'
+        required: true
+      responses:
+        '200':
+          description: Comic chapter updated.
+          headers:
+            Location:
+              description: The path of updated comic chapter.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicChapter'
+        '204':
+          description: Comic chapter unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Comic
+      summary: Delete comic chapter.
+      operationId: deleteComicChapter
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Comic chapter deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}/chapters/{cv}/links:
+    post:
+      tags:
+        - Comic
+      summary: Add comic chapter link.
+      operationId: addComicChapterLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewComicChapterLink'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewComicChapterLink'
+        required: true
+      responses:
+        '201':
+          description: Comic chapter link added.
+          headers:
+            Location:
+              description: The path of new comic chapter link.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicChapterLink'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /comics/{code}/chapters/{cv}/links/{websiteDomain}-{relativeURL}:
+    get:
+      tags:
+        - Comic
+      summary: Get comic chapter link.
+      operationId: getComicChapterLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter.
+          required: true
+          schema:
+            type: string
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link to return.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Comic chapter link gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicChapterLink'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Comic
+      summary: Update comic chapter link.
+      operationId: updateComicChapterLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter.
+          required: true
+          schema:
+            type: string
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link to update.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetComicChapterLink'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetComicChapterLink'
+        required: true
+      responses:
+        '200':
+          description: Comic chapter link updated.
+          headers:
+            Location:
+              description: The path of updated comic chapter link.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComicChapterLink'
+        '204':
+          description: Comic chapter link unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Comic
+      summary: Delete comic chapter link.
+      operationId: deleteComicChapterLink
+      parameters:
+        - name: code
+          in: path
+          description: Code of comic.
+          required: true
+          schema:
+            type: string
+        - name: cv
+          in: path
+          description: Chapter[+Version] of comic chapter.
+          required: true
+          schema:
+            type: string
+        - name: websiteDomain
+          in: path
+          description: Website domain name of comic link to delete.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Comic chapter link deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /languages:
+    get:
+      tags:
+        - Language
+      summary: List language.
+      operationId: listLanguage
+      parameters:
+        - name: page
+          in: query
+          description: Page number of results.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of results.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: Sort results returned.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Language list.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: The total count of language with current filter.
+            X-Pagination-Limit:
+              schema:
+                type: integer
+              description: The last page number of language with current filter and limit.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Language'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - Language
+      summary: Add language.
+      operationId: addLanguage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewLanguage'
+        required: true
+      responses:
+        '201':
+          description: Language added.
+          headers:
+            Location:
+              schema:
+                type: string
+              description: The path of new language.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /languages/{ietf}:
+    get:
+      tags:
+        - Language
+      summary: Get language.
+      operationId: getLanguage
+      parameters:
+        - name: ietf
+          in: path
+          description: IETF code of language to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Language gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Language
+      summary: Update language.
+      operationId: updateLanguage
+      parameters:
+        - name: ietf
+          in: path
+          description: IETF code of language to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetLanguage'
+        required: true
+      responses:
+        '200':
+          description: Language updated.
+          headers:
+            Location:
+              description: The path of updated language.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+        '204':
+          description: Language unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Language
+      summary: Delete language.
+      operationId: deleteLanguage
+      parameters:
+        - name: ietf
+          in: path
+          description: IETF code of language to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Language deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /websites:
+    get:
+      tags:
+        - Website
+      summary: List website.
+      operationId: listWebsite
+      parameters:
+        - name: page
+          in: query
+          description: Page number of results.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of results.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: Sort results returned.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Website list.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: The total count of website with current filter.
+            X-Pagination-Limit:
+              schema:
+                type: integer
+              description: The last page number of website with current filter and limit.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Website'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - Website
+      summary: Add website.
+      operationId: addWebsite
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewWebsite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewWebsite'
+        required: true
+      responses:
+        '201':
+          description: Website added.
+          headers:
+            Location:
+              description: The path of new website.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /websites/{domain}:
+    get:
+      tags:
+        - Website
+      summary: Get website.
+      operationId: getWebsite
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Website gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Website
+      summary: Update website.
+      operationId: updateWebsite
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetWebsite'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetWebsite'
+        required: true
+      responses:
+        '200':
+          description: Website updated.
+          headers:
+            Location:
+              description: The path of updated website.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Website'
+        '204':
+          description: Website unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Website
+      summary: Delete website.
+      operationId: deleteWebsite
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Website deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /websites/{domain}/tl-languages:
+    post:
+      tags:
+        - Website
+      summary: Add website TL language.
+      operationId: addWebsiteTLLanguage
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewWebsiteTLLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewWebsiteTLLanguage'
+        required: true
+      responses:
+        '201':
+          description: Website TL language added.
+          headers:
+            Location:
+              description: The path of new website TL language.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteTLLanguage'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /websites/{domain}/tl-languages/{ietf}:
+    get:
+      tags:
+        - Website
+      summary: Get website TL language.
+      operationId: getWebsiteTLLanguage
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website.
+          required: true
+          schema:
+            type: string
+        - name: ietf
+          in: path
+          description: IETF code of website TL language to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Website TL language gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteTLLanguage'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Website
+      summary: Update website TL language.
+      operationId: updateWebsiteTLLanguage
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website.
+          required: true
+          schema:
+            type: string
+        - name: ietf
+          in: path
+          description: IETF code of website TL language to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetWebsiteTLLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetWebsiteTLLanguage'
+        required: true
+      responses:
+        '200':
+          description: Website TL language updated.
+          headers:
+            Location:
+              description: The path of updated website TL language.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebsiteTLLanguage'
+        '204':
+          description: Website TL language unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Website
+      summary: Delete website TL language.
+      operationId: deleteWebsiteTLLanguage
+      parameters:
+        - name: domain
+          in: path
+          description: Domain name of website.
+          required: true
+          schema:
+            type: string
+        - name: ietf
+          in: path
+          description: IETF code of website TL language to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Website TL language deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /links:
+    get:
+      tags:
+        - Link
+      summary: List link.
+      operationId: listLink
+      parameters:
+        - name: page
+          in: query
+          description: Page number of results.
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          description: Maximum number of results.
+          schema:
+            type: integer
+        - name: order_by
+          in: query
+          description: Sort results returned.
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        '200':
+          description: Link list.
+          headers:
+            X-Total-Count:
+              schema:
+                type: integer
+              description: The total count of link with current filter.
+            X-Pagination-Limit:
+              schema:
+                type: integer
+              description: The last page number of link with current filter and limit.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Link'
+        default:
+          $ref: '#/components/responses/Default'
+    post:
+      tags:
+        - Link
+      summary: Add link.
+      operationId: addLink
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewLink'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewLink'
+        required: true
+      responses:
+        '201':
+          description: Link added.
+          headers:
+            Location:
+              description: The path of new link.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /links/{websiteDomain}-{relativeURL}:
+    get:
+      tags:
+        - Link
+      summary: Get link.
+      operationId: getLink
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link to return.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Link gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Link
+      summary: Update link.
+      operationId: updateLink
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link to update.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLink'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetLink'
+        required: true
+      responses:
+        '200':
+          description: Link updated.
+          headers:
+            Location:
+              description: The path of updated link.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Link'
+        '204':
+          description: Link unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Link
+      summary: Delete link.
+      operationId: deleteLink
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of linik to delete.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of linik to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Link deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /links/{websiteDomain}-{relativeURL}/tl-languages:
+    post:
+      tags:
+        - Link
+      summary: Add link TL language.
+      operationId: addLinkTLLanguage
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewLinkTLLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/NewLinkTLLanguage'
+        required: true
+      responses:
+        '201':
+          description: Link TL language added.
+          headers:
+            Location:
+              description: The path of new link TL language.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkTLLanguage'
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+  /links/{websiteDomain}-{relativeURL}/tl-languages/{ietf}:
+    get:
+      tags:
+        - Link
+      summary: Get link TL language.
+      operationId: getLinkTLLanguage
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link.
+          required: true
+          schema:
+            type: string
+        - name: ietf
+          in: path
+          description: IETF code of link TL language to return.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Link TL language gets.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkTLLanguage'
+        default:
+          $ref: '#/components/responses/Default'
+    patch:
+      tags:
+        - Link
+      summary: Update link TL language.
+      operationId: updateLinkTLLanguage
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link.
+          required: true
+          schema:
+            type: string
+        - name: ietf
+          in: path
+          description: IETF code of link TL language to update.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetLinkTLLanguage'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetLinkTLLanguage'
+        required: true
+      responses:
+        '200':
+          description: Link TL language updated.
+          headers:
+            Location:
+              description: The path of updated link TL language.
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LinkTLLanguage'
+        '204':
+          description: Link TL language unmodified.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+    delete:
+      tags:
+        - Link
+      summary: Delete link TL language.
+      operationId: deleteLinkTLLanguage
+      parameters:
+        - name: websiteDomain
+          in: path
+          description: Website domain name of link.
+          required: true
+          schema:
+            type: string
+        - name: relativeURL
+          in: path
+          description: Relative URL of link.
+          required: true
+          schema:
+            type: string
+        - name: ietf
+          in: path
+          description: IETF code of link TL language to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Link TL language deleted.
+        default:
+          $ref: '#/components/responses/Default'
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    Object:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          x-go-type: uint
+          x-go-name: ID
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+      required:
+        - id
+        - createdAt
+    Comic:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            code:
+              type: string
+            links:
+              type: array
+              items:
+                $ref: '#/components/schemas/Link'
+            chapters:
+              type: array
+              items:
+                $ref: '#/components/schemas/ComicChapter'
+          required:
+            - code
+    NewComic:
+      type: object
+      properties:
+        code:
+          type: string
+      required:
+        - code
+    SetComic:
+      type: object
+      properties:
+        code:
+          type: string
+          nullable: true
+    ComicLink:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        linkID:
+          type: integer
+          x-go-type: uint
+        linkWebsiteDomain:
+          type: string
+        linkRelativeURL:
+          type: string
+      required:
+        - createdAt
+        - linkID
+        - linkWebsiteDomain
+        - linkRelativeURL
+    NewComicLink:
+      type: object
+      properties:
+        linkID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        linkWebsiteDomain:
+          type: string
+          nullable: true
+        linkRelativeURL:
+          type: string
+          nullable: true
+    SetComicLink:
+      type: object
+      properties:
+        linkID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        linkWebsiteDomain:
+          type: string
+          nullable: true
+        linkRelativeURL:
+          type: string
+          nullable: true
+    ComicChapter:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            chapter:
+              type: string
+            version:
+              type: string
+              nullable: true
+            releasedAt:
+              type: string
+              format: date-time
+            links:
+              type: array
+              items:
+                $ref: '#/components/schemas/Link'
+          required:
+            - chapter
+            - releasedAt
+    NewComicChapter:
+      type: object
+      properties:
+        chapter:
+          type: string
+        version:
+          type: string
+          nullable: true
+        releasedAt:
+          type: string
+          format: date-time
+      required:
+        - chapter
+        - releasedAt
+    SetComicChapter:
+      type: object
+      properties:
+        chapter:
+          type: string
+          nullable: true
+        version:
+          type: string
+          nullable: true
+        releasedAt:
+          type: string
+          format: date-time
+          nullable: true
+        setNull:
+          type: array
+          items:
+            type: string
+          x-go-type-skip-optional-pointer: true
+    ComicChapterLink:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        linkID:
+          type: integer
+          x-go-type: uint
+        linkWebsiteDomain:
+          type: string
+        linkRelativeURL:
+          type: string
+      required:
+        - createdAt
+        - linkID
+        - linkWebsiteDomain
+        - linkRelativeURL
+    NewComicChapterLink:
+      type: object
+      properties:
+        linkID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        linkWebsiteDomain:
+          type: string
+          nullable: true
+        linkRelativeURL:
+          type: string
+          nullable: true
+    SetComicChapterLink:
+      type: object
+      properties:
+        linkID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        linkWebsiteDomain:
+          type: string
+          nullable: true
+        linkRelativeURL:
+          type: string
+          nullable: true
+    Language:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            ietf:
+              type: string
+              x-go-name: IETF
+            name:
+              type: string
+          required: 
+            - ietf
+            - name
+    NewLanguage:
+      type: object
+      properties:
+        ietf:
+          type: string
+          x-go-name: IETF
+        name:
+          type: string
+      required: 
+        - ietf
+        - name
+    SetLanguage:
+      type: object
+      properties:
+        ietf:
+          type: string
+          nullable: true
+          x-go-name: IETF
+        name:
+          type: string
+          nullable: true
+    Website:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            domain:
+              type: string
+            name:
+              type: string
+            tlLanguages:
+              type: array
+              items:
+                $ref: '#/components/schemas/Language'
+              x-go-name: TLLanguages
+            machineTL:
+              type: boolean
+              nullable: true
+          required: 
+            - domain
+            - name
+    NewWebsite:
+      type: object
+      properties:
+        domain:
+          type: string
+        name:
+          type: string
+        machineTL:
+          type: boolean
+          nullable: true
+      required: 
+        - domain
+        - name
+    SetWebsite:
+      type: object
+      properties:
+        domain:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        machineTL:
+          type: boolean
+          nullable: true
+    WebsiteTLLanguage:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        languageID:
+          type: integer
+          x-go-type: uint
+        languageIETF:
+          type: string
+      required:
+        - createdAt
+        - languageID
+        - languageIETF
+    NewWebsiteTLLanguage:
+      type: object
+      properties:
+        languageID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        languageIETF:
+          type: string
+          nullable: true
+    SetWebsiteTLLanguage:
+      type: object
+      properties:
+        languageID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        languageIETF:
+          type: string
+          nullable: true
+    Link:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/Object'
+        - type: object
+          properties:
+            websiteID:
+              type: integer
+              x-go-type: uint
+            websiteDomain:
+              type: string
+            relativeURL:
+              type: string
+            tlLanguages:
+              type: array
+              items:
+                $ref: '#/components/schemas/Language'
+              x-go-name: TLLanguages
+            machineTL:
+              type: boolean
+              nullable: true
+          required: 
+            - websiteID
+            - websiteDomain
+            - relativeURL
+    NewLink:
+      type: object
+      properties:
+        websiteID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        websiteDomain:
+          type: string
+          nullable: true
+        relativeURL:
+          type: string
+        machineTL:
+          type: boolean
+          nullable: true
+      required: 
+        - relativeURL
+    SetLink:
+      type: object
+      properties:
+        websiteID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        websiteDomain:
+          type: string
+          nullable: true
+        relativeURL:
+          type: string
+          nullable: true
+        machineTL:
+          type: boolean
+          nullable: true
+        setNull:
+          type: array
+          items:
+            type: string
+          x-go-type-skip-optional-pointer: true
+    LinkTLLanguage:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+          nullable: true
+        languageID:
+          type: integer
+          x-go-type: uint
+        languageIETF:
+          type: string
+      required:
+        - createdAt
+        - languageID
+        - languageIETF
+    NewLinkTLLanguage:
+      type: object
+      properties:
+        languageID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        languageIETF:
+          type: string
+          nullable: true
+    SetLinkTLLanguage:
+      type: object
+      properties:
+        languageID:
+          type: integer
+          nullable: true
+          x-go-type: uint
+        languageIETF:
+          type: string
+          nullable: true
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties: 
+            status:
+              type: string
+            message:
+              type: string
+          required:
+            - status
+            - message
+      required:
+        - error
+  responses:
+    Default:
+      description: Unexpected error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

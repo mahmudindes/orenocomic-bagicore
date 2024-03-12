@@ -1,0 +1,3 @@
+{{ define "title" }}{{ .Name }} - {{ statusText .StatusCode }}{{ end }}
+{{ define "main" }}<h1>{{ statusText .StatusCode }}</h1>{{ if ne .Error "" }}
+<h2>{{ .Error }}</h2>{{ end }}{{ end }}
