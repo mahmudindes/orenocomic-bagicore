@@ -7,8 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/oapi-codegen/runtime"
-
 	"github.com/mahmudindes/orenocomic-bagicore/internal/controller/chttp/utilb"
 	"github.com/mahmudindes/orenocomic-bagicore/internal/model"
 	"github.com/mahmudindes/orenocomic-bagicore/internal/utila"
@@ -43,7 +41,7 @@ func queryOrderBys(obs []string) model.OrderBys {
 }
 
 func formDecode(form url.Values, v any) error {
-	return runtime.BindForm(v, form, nil, nil)
+	return utilb.FormDecoder.Decode(v, form)
 }
 
 func slicesModel[E, M any](ms []*M, mf func(*M) E) *[]E {

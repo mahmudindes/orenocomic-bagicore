@@ -1506,6 +1506,8 @@ components:
       properties:
         code:
           type: string
+          x-oapi-codegen-extra-tags:
+            form: code
       required:
         - code
     SetComic:
@@ -1514,6 +1516,8 @@ components:
         code:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: code
     ComicLink:
       type: object
       properties:
@@ -1543,12 +1547,18 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: linkID
         linkWebsiteDomain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkWebsiteDomain
         linkRelativeURL:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkRelativeURL
     SetComicLink:
       type: object
       properties:
@@ -1556,12 +1566,18 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: linkID
         linkWebsiteDomain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkWebsiteDomain
         linkRelativeURL:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkRelativeURL
     ComicChapter:
       type: object
       allOf:
@@ -1588,12 +1604,18 @@ components:
       properties:
         chapter:
           type: string
+          x-oapi-codegen-extra-tags:
+            form: chapter
         version:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: version
         releasedAt:
           type: string
           format: date-time
+          x-oapi-codegen-extra-tags:
+            form: releasedAt
       required:
         - chapter
         - releasedAt
@@ -1603,18 +1625,26 @@ components:
         chapter:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: chapter
         version:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: version
         releasedAt:
           type: string
           format: date-time
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: releasedAt
         setNull:
           type: array
           items:
             type: string
           x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            form: setNull,omitempty
     ComicChapterLink:
       type: object
       properties:
@@ -1644,12 +1674,18 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: linkID
         linkWebsiteDomain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkWebsiteDomain
         linkRelativeURL:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkRelativeURL
     SetComicChapterLink:
       type: object
       properties:
@@ -1657,12 +1693,18 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: linkID
         linkWebsiteDomain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkWebsiteDomain
         linkRelativeURL:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: linkRelativeURL
     Language:
       type: object
       allOf:
@@ -1683,8 +1725,12 @@ components:
         ietf:
           type: string
           x-go-name: IETF
+          x-oapi-codegen-extra-tags:
+            form: ietf
         name:
           type: string
+          x-oapi-codegen-extra-tags:
+            form: name
       required: 
         - ietf
         - name
@@ -1695,9 +1741,13 @@ components:
           type: string
           nullable: true
           x-go-name: IETF
+          x-oapi-codegen-extra-tags:
+            form: ietf
         name:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: name
     Website:
       type: object
       allOf:
@@ -1724,11 +1774,17 @@ components:
       properties:
         domain:
           type: string
+          x-oapi-codegen-extra-tags:
+            form: domain
         name:
           type: string
+          x-oapi-codegen-extra-tags:
+            form: name
         machineTL:
           type: boolean
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: machineTL
       required: 
         - domain
         - name
@@ -1738,12 +1794,18 @@ components:
         domain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: domain
         name:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: name
         machineTL:
           type: boolean
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: machineTL
     WebsiteTLLanguage:
       type: object
       properties:
@@ -1770,9 +1832,13 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: languageID
         languageIETF:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: languageIETF
     SetWebsiteTLLanguage:
       type: object
       properties:
@@ -1780,9 +1846,13 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: languageID
         languageIETF:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: languageIETF
     Link:
       type: object
       allOf:
@@ -1815,14 +1885,22 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: websiteID
         websiteDomain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: websiteDomain
         relativeURL:
           type: string
+          x-oapi-codegen-extra-tags:
+            form: relativeURL
         machineTL:
           type: boolean
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: machineTL
       required: 
         - relativeURL
     SetLink:
@@ -1832,20 +1910,30 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: websiteID
         websiteDomain:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: websiteDomain
         relativeURL:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: relativeURL
         machineTL:
           type: boolean
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: machineTL
         setNull:
           type: array
           items:
             type: string
           x-go-type-skip-optional-pointer: true
+          x-oapi-codegen-extra-tags:
+            form: setNull,omitempty
     LinkTLLanguage:
       type: object
       properties:
@@ -1872,9 +1960,13 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: languageID
         languageIETF:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: languageIETF
     SetLinkTLLanguage:
       type: object
       properties:
@@ -1882,9 +1974,13 @@ components:
           type: integer
           nullable: true
           x-go-type: uint
+          x-oapi-codegen-extra-tags:
+            form: languageID
         languageIETF:
           type: string
           nullable: true
+          x-oapi-codegen-extra-tags:
+            form: languageIETF
     Error:
       type: object
       properties:

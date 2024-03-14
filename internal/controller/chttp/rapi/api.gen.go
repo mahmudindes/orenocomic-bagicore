@@ -104,61 +104,61 @@ type LinkTLLanguage struct {
 
 // NewComic defines model for NewComic.
 type NewComic struct {
-	Code string `json:"code"`
+	Code string `form:"code" json:"code"`
 }
 
 // NewComicChapter defines model for NewComicChapter.
 type NewComicChapter struct {
-	Chapter    string    `json:"chapter"`
-	ReleasedAt time.Time `json:"releasedAt"`
-	Version    *string   `json:"version"`
+	Chapter    string    `form:"chapter" json:"chapter"`
+	ReleasedAt time.Time `form:"releasedAt" json:"releasedAt"`
+	Version    *string   `form:"version" json:"version"`
 }
 
 // NewComicChapterLink defines model for NewComicChapterLink.
 type NewComicChapterLink struct {
-	LinkID            *uint   `json:"linkID"`
-	LinkRelativeURL   *string `json:"linkRelativeURL"`
-	LinkWebsiteDomain *string `json:"linkWebsiteDomain"`
+	LinkID            *uint   `form:"linkID" json:"linkID"`
+	LinkRelativeURL   *string `form:"linkRelativeURL" json:"linkRelativeURL"`
+	LinkWebsiteDomain *string `form:"linkWebsiteDomain" json:"linkWebsiteDomain"`
 }
 
 // NewComicLink defines model for NewComicLink.
 type NewComicLink struct {
-	LinkID            *uint   `json:"linkID"`
-	LinkRelativeURL   *string `json:"linkRelativeURL"`
-	LinkWebsiteDomain *string `json:"linkWebsiteDomain"`
+	LinkID            *uint   `form:"linkID" json:"linkID"`
+	LinkRelativeURL   *string `form:"linkRelativeURL" json:"linkRelativeURL"`
+	LinkWebsiteDomain *string `form:"linkWebsiteDomain" json:"linkWebsiteDomain"`
 }
 
 // NewLanguage defines model for NewLanguage.
 type NewLanguage struct {
-	IETF string `json:"ietf"`
-	Name string `json:"name"`
+	IETF string `form:"ietf" json:"ietf"`
+	Name string `form:"name" json:"name"`
 }
 
 // NewLink defines model for NewLink.
 type NewLink struct {
-	MachineTL     *bool   `json:"machineTL"`
-	RelativeURL   string  `json:"relativeURL"`
-	WebsiteDomain *string `json:"websiteDomain"`
-	WebsiteID     *uint   `json:"websiteID"`
+	MachineTL     *bool   `form:"machineTL" json:"machineTL"`
+	RelativeURL   string  `form:"relativeURL" json:"relativeURL"`
+	WebsiteDomain *string `form:"websiteDomain" json:"websiteDomain"`
+	WebsiteID     *uint   `form:"websiteID" json:"websiteID"`
 }
 
 // NewLinkTLLanguage defines model for NewLinkTLLanguage.
 type NewLinkTLLanguage struct {
-	LanguageID   *uint   `json:"languageID"`
-	LanguageIETF *string `json:"languageIETF"`
+	LanguageID   *uint   `form:"languageID" json:"languageID"`
+	LanguageIETF *string `form:"languageIETF" json:"languageIETF"`
 }
 
 // NewWebsite defines model for NewWebsite.
 type NewWebsite struct {
-	Domain    string `json:"domain"`
-	MachineTL *bool  `json:"machineTL"`
-	Name      string `json:"name"`
+	Domain    string `form:"domain" json:"domain"`
+	MachineTL *bool  `form:"machineTL" json:"machineTL"`
+	Name      string `form:"name" json:"name"`
 }
 
 // NewWebsiteTLLanguage defines model for NewWebsiteTLLanguage.
 type NewWebsiteTLLanguage struct {
-	LanguageID   *uint   `json:"languageID"`
-	LanguageIETF *string `json:"languageIETF"`
+	LanguageID   *uint   `form:"languageID" json:"languageID"`
+	LanguageIETF *string `form:"languageIETF" json:"languageIETF"`
 }
 
 // Object defines model for Object.
@@ -170,63 +170,63 @@ type Object struct {
 
 // SetComic defines model for SetComic.
 type SetComic struct {
-	Code *string `json:"code"`
+	Code *string `form:"code" json:"code"`
 }
 
 // SetComicChapter defines model for SetComicChapter.
 type SetComicChapter struct {
-	Chapter    *string    `json:"chapter"`
-	ReleasedAt *time.Time `json:"releasedAt"`
-	SetNull    []string   `json:"setNull,omitempty"`
-	Version    *string    `json:"version"`
+	Chapter    *string    `form:"chapter" json:"chapter"`
+	ReleasedAt *time.Time `form:"releasedAt" json:"releasedAt"`
+	SetNull    []string   `form:"setNull,omitempty" json:"setNull,omitempty"`
+	Version    *string    `form:"version" json:"version"`
 }
 
 // SetComicChapterLink defines model for SetComicChapterLink.
 type SetComicChapterLink struct {
-	LinkID            *uint   `json:"linkID"`
-	LinkRelativeURL   *string `json:"linkRelativeURL"`
-	LinkWebsiteDomain *string `json:"linkWebsiteDomain"`
+	LinkID            *uint   `form:"linkID" json:"linkID"`
+	LinkRelativeURL   *string `form:"linkRelativeURL" json:"linkRelativeURL"`
+	LinkWebsiteDomain *string `form:"linkWebsiteDomain" json:"linkWebsiteDomain"`
 }
 
 // SetComicLink defines model for SetComicLink.
 type SetComicLink struct {
-	LinkID            *uint   `json:"linkID"`
-	LinkRelativeURL   *string `json:"linkRelativeURL"`
-	LinkWebsiteDomain *string `json:"linkWebsiteDomain"`
+	LinkID            *uint   `form:"linkID" json:"linkID"`
+	LinkRelativeURL   *string `form:"linkRelativeURL" json:"linkRelativeURL"`
+	LinkWebsiteDomain *string `form:"linkWebsiteDomain" json:"linkWebsiteDomain"`
 }
 
 // SetLanguage defines model for SetLanguage.
 type SetLanguage struct {
-	IETF *string `json:"ietf"`
-	Name *string `json:"name"`
+	IETF *string `form:"ietf" json:"ietf"`
+	Name *string `form:"name" json:"name"`
 }
 
 // SetLink defines model for SetLink.
 type SetLink struct {
-	MachineTL     *bool    `json:"machineTL"`
-	RelativeURL   *string  `json:"relativeURL"`
-	SetNull       []string `json:"setNull,omitempty"`
-	WebsiteDomain *string  `json:"websiteDomain"`
-	WebsiteID     *uint    `json:"websiteID"`
+	MachineTL     *bool    `form:"machineTL" json:"machineTL"`
+	RelativeURL   *string  `form:"relativeURL" json:"relativeURL"`
+	SetNull       []string `form:"setNull,omitempty" json:"setNull,omitempty"`
+	WebsiteDomain *string  `form:"websiteDomain" json:"websiteDomain"`
+	WebsiteID     *uint    `form:"websiteID" json:"websiteID"`
 }
 
 // SetLinkTLLanguage defines model for SetLinkTLLanguage.
 type SetLinkTLLanguage struct {
-	LanguageID   *uint   `json:"languageID"`
-	LanguageIETF *string `json:"languageIETF"`
+	LanguageID   *uint   `form:"languageID" json:"languageID"`
+	LanguageIETF *string `form:"languageIETF" json:"languageIETF"`
 }
 
 // SetWebsite defines model for SetWebsite.
 type SetWebsite struct {
-	Domain    *string `json:"domain"`
-	MachineTL *bool   `json:"machineTL"`
-	Name      *string `json:"name"`
+	Domain    *string `form:"domain" json:"domain"`
+	MachineTL *bool   `form:"machineTL" json:"machineTL"`
+	Name      *string `form:"name" json:"name"`
 }
 
 // SetWebsiteTLLanguage defines model for SetWebsiteTLLanguage.
 type SetWebsiteTLLanguage struct {
-	LanguageID   *uint   `json:"languageID"`
-	LanguageIETF *string `json:"languageIETF"`
+	LanguageID   *uint   `form:"languageID" json:"languageID"`
+	LanguageIETF *string `form:"languageIETF" json:"languageIETF"`
 }
 
 // Website defines model for Website.
@@ -2511,54 +2511,56 @@ func HandlerWithOptions(si ServerInterface, options ChiServerOptions) http.Handl
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-	"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",
-	"tKfT/wIAAP//GR9D0ASSAAA=",
+	"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",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file
