@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	copy(ComicOrderByAllow, GenericOrderByAllow)
+	ComicOrderByAllow = append(ComicOrderByAllow, GenericOrderByAllow...)
 }
 
 const (
@@ -77,7 +77,7 @@ func (m SetComic) Validate() error {
 }
 
 func init() {
-	copy(ComicLinkOrderByAllow, GenericOrderByAllow)
+	ComicLinkOrderByAllow = append(ComicLinkOrderByAllow, GenericOrderByAllow...)
 }
 
 const (
@@ -157,7 +157,7 @@ func (m SetComicLink) Validate() error {
 }
 
 func init() {
-	copy(ComicChapterOrderByAllow, GenericOrderByAllow)
+	ComicChapterOrderByAllow = append(ComicChapterOrderByAllow, GenericOrderByAllow...)
 }
 
 const (
@@ -302,7 +302,7 @@ func (m SetComicChapter) Validate() error {
 }
 
 func init() {
-	copy(ComicChapterLinkOrderByAllow, GenericOrderByAllow)
+	ComicChapterLinkOrderByAllow = append(ComicChapterLinkOrderByAllow, GenericOrderByAllow...)
 }
 
 const (

@@ -8,7 +8,7 @@ import (
 )
 
 func init() {
-	copy(LanguageOrderByAllow, GenericOrderByAllow)
+	LanguageOrderByAllow = append(LanguageOrderByAllow, GenericOrderByAllow...)
 }
 
 const (

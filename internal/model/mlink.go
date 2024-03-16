@@ -9,7 +9,7 @@ import (
 )
 
 func init() {
-	copy(LinkOrderByAllow, GenericOrderByAllow)
+	LinkOrderByAllow = append(LinkOrderByAllow, GenericOrderByAllow...)
 }
 
 const (
@@ -123,7 +123,7 @@ func (m SetLink) Validate() error {
 }
 
 func init() {
-	copy(LinkTLLanguageOrderByAllow, GenericOrderByAllow)
+	LinkTLLanguageOrderByAllow = append(LinkTLLanguageOrderByAllow, GenericOrderByAllow...)
 }
 
 const (

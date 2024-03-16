@@ -10,7 +10,7 @@ import (
 )
 
 func init() {
-	copy(WebsiteOrderByAllow, GenericOrderByAllow)
+	WebsiteOrderByAllow = append(WebsiteOrderByAllow, GenericOrderByAllow...)
 }
 
 const (
@@ -116,7 +116,7 @@ func (m SetWebsite) Validate() error {
 }
 
 func init() {
-	copy(WebsiteTLLanguageOrderByAllow, GenericOrderByAllow)
+	WebsiteTLLanguageOrderByAllow = append(WebsiteTLLanguageOrderByAllow, GenericOrderByAllow...)
 }
 
 const (
