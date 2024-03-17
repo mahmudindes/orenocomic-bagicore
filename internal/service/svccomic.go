@@ -498,7 +498,7 @@ func (svc Service) GetComicChapterBySID(ctx context.Context, sid model.ComicChap
 	default:
 		version = model.DBIsNull{}
 	}
-	return svc.database.GetComicChapter(ctx, map[string]any{
+	return svc.getComicChapter(ctx, map[string]any{
 		model.DBComicGenericComicID: comicID,
 		model.DBComicChapterChapter: sid.Chapter,
 		model.DBComicChapterVersion: version,
@@ -651,7 +651,7 @@ func (svc Service) listComicChapter(ctx context.Context, params model.ListParams
 		}
 		for _, link := range links0 {
 			for _, r := range result {
-				if r.ID == link.LinkID {
+				if r.ID == link.ChapterID {
 					r.Links = append(r.Links, links[link.LinkID])
 				}
 			}
