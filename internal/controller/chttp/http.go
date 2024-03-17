@@ -104,6 +104,7 @@ func New(svc Service, oa OAuth, cfg Config, log logger.Logger) (*HTTP, error) {
 			opt.AllowedOrigin = cfg.CORSOrigins
 			opt.AllowedMethod = append(opt.AllowedMethod, http.MethodPatch, http.MethodPost)
 			opt.AllowedMethod = append(opt.AllowedMethod, http.MethodDelete)
+			opt.ExposedHeader = append(opt.ExposedHeader, "X-Total-Count", "X-Pagination-Limit")
 			opt.AllowCredentials = true
 			opt.SkipOrigin = false
 		}), middleware.CORSProcess, middleware.Auth(oa))
